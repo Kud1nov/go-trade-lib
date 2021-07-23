@@ -1,14 +1,14 @@
-package candles
+package candle
 
 import "time"
 
-type Candle interface {
+type BaseCandle interface {
 	Open() float64
 	Close() float64
 	High() float64
 	Low() float64
 	Time() time.Time
-	Prev() Candle
+	Prev() BaseCandle
 }
 
 type baseCandle struct {
@@ -17,7 +17,7 @@ type baseCandle struct {
 	high  float64
 	low   float64
 	time  time.Time
-	prev  Candle
+	prev  BaseCandle
 }
 
 func (bc *baseCandle) Open() float64 {
@@ -40,24 +40,17 @@ func (bc *baseCandle) Time() time.Time {
 	return bc.time
 }
 
-func (bc *baseCandle) Prev() Candle {
+func (bc *baseCandle) Prev() BaseCandle {
 	return bc.prev
 }
 
-func New (
-	time time.Time,
-	open float64,
-	close float64,
-	high float64,
-	low float64,
-	prev Candle,
-	) Candle {
+func New(cTime time.Time, prev BaseCandle, cOpen, cClose, cHigh, cLow float64) BaseCandle {
 	return &baseCandle{
-		time: time,
-		open: open,
-		close: close,
-		high: high,
-		low: low,
-		prev: prev,
+		time:  cTime,
+		open:  cOpen,
+		close: cClose,
+		high:  cHigh,
+		low:   cLow,
+		prev:  prev,
 	}
 }

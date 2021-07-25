@@ -1,6 +1,6 @@
 package statistics
 
-type Statistic interface {
+type Info interface {
 	Strategy() Strategy
 	ProfitLoss() ProfitLoss
 	Trades() Trades
@@ -22,7 +22,7 @@ func (s *statistic) Trades() Trades {
 	return s.trades
 }
 
-func NewStatistic() Statistic {
+func New() Info {
 	return &statistic{
 		strategy:   NewStrategy(),
 		profitLoss: NewProfitLoss(),
